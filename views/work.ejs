@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("partials/head.ejs") %>
+    <link rel="stylesheet" href="/css/work.css">
+</head>
+<body> 
+    <%- include("partials/header.ejs") %>
+
+    <h1><%- date.day %>, <%- date.dayNumber %> <%- date.month %> - <%- date.year %></h1>
+    
+    <div class="work-list container">
+        <ul>
+            <% if (locals.workTodos) { %>
+                <% workTodos.forEach((item) => { %>
+                    <li> <%-  item.todoItem  %> </li>
+                <% }); %>
+            <% } %>    
+            <li>
+                <form action="/work" method="POST">
+                <input type="text" name="todoTask" placeholder="Add a new Task">
+                <button type="submit">+</button>
+                </form>
+            </li>
+        </ul> 
+    </div>    
+</body>
+</html>

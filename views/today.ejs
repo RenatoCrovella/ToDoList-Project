@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include("partials/head.ejs") %>
     <link rel="stylesheet" href="/css/today.css">
-
-    <title>To Do List - Crovelland</title>
 </head>
-<body>
+<body> 
     <%- include("partials/header.ejs") %>
-    <h1><%- day %>, <%- dayNumber %> <%- month %> - <%- year %></h1>
-    <form action="/" method="POST">
-        <input type="text" name="todoTask" placeholder="Add a new Task">
-        <button type="submit">+</button>
-     </form>
+
+    <h1><%- date.day %>, <%- date.dayNumber %> <%- date.month %> - <%- date.year %></h1>
+    
+    <div class="today-list container">
+        <ul>
+            <% if (locals.todayTodos) { %>
+                <% todayTodos.forEach((item) => { %>
+                    <li> <%-  item.todoItem  %> </li>
+                <% }); %>
+            <% } %>    
+            <li>
+                <form action="/" method="POST">
+                <input type="text" name="todoTask" placeholder="Add a new Task">
+                <button type="submit">+</button>
+                </form>
+            </li>
+        </ul> 
+    </div>    
 </body>
 </html>
