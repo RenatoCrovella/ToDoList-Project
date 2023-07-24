@@ -1,2 +1,18 @@
-<%- include("partials/header.ejs") %>
-<h1>hi</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/today.css">
+
+    <title>To Do List - Crovelland</title>
+</head>
+<body>
+    <%- include("partials/header.ejs") %>
+    <h1><%- day %>, <%- dayNumber %> <%- month %> - <%- year %></h1>
+    <form action="/" method="POST">
+        <input type="text" name="todoTask" placeholder="Add a new Task">
+        <button type="submit">+</button>
+     </form>
+</body>
+</html>
