@@ -3,7 +3,7 @@
 
 <head>
     <%- include("partials/head.ejs") %>
-        <link rel="stylesheet" href="/css/today.css">
+    <link rel="stylesheet" href="/css/today.css">
 </head>
 
 <body>
@@ -35,14 +35,17 @@
               <li>
                 <form action="/" method="POST">
                   <input type="text" name="todoTask" placeholder="Add a new Task">
-                  <button type="submit">+</button>
+                  <button class="btn btn-light" type="submit">Add</button>
                 </form>
               </li>
             </ul>
           </div>
         </div>
-      </div>
+    </div>
 
+    <div class="list-deco">
+        <img class="list-icon" src="/images/list.png" alt="An icon representing and orange with a smile and two cartoon eyes">
+    </div>
 
       <script>
 

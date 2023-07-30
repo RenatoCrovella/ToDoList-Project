@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <%- include("partials/head.ejs") %>
     <link rel="stylesheet" href="/css/buyer.css">
 </head>
-<body> 
+
+<body>
     <%- include("partials/header.ejs") %>
 
-    <h1><%- date.day %>, <%- date.dayNumber %> <%- date.month %> - <%- date.year %></h1>
-    
+    <div class="container container-top">
+        <h1><%- date.day %>, <%- date.dayNumber %> <%- date.month %> - <%- date.year %></h1>
+    </div>
+
     <div class="today-list container">
         <div class="row">
           <div class="col">
@@ -31,15 +35,19 @@
               <li>
                 <form action="/buyer" method="POST">
                   <input type="text" name="todoTask" placeholder="Add a new Task">
-                  <button type="submit">+</button>
+                  <button class="btn btn-success" type="submit">Add</button>
                 </form>
               </li>
             </ul>
           </div>
         </div>
-      </div>
+    </div>
 
-    <script>
+    <div class="list-deco">
+        <img class="list-icon" src="/images/orange.png" alt="An icon representing and orange with a smile and two cartoon eyes">
+    </div>
+
+      <script>
 
         document.addEventListener('DOMContentLoaded', () => {
             const todoForms = document.querySelectorAll('.todo-form');
@@ -53,10 +61,8 @@
                 const isChecked = checkbox.checked;
                 const itemId = itemIdInput.value;
                 
-                // Atualizar o valor de "completed" no input hidden para refletir o novo estado
                 completedInput.value = isChecked;
         
-                // Enviar uma requisição para o servidor para atualizar o item
                 fetch('/toggleCheckbox', {
                 method: 'POST',
                 headers: {
@@ -69,7 +75,6 @@
                 })
                 })
                 .then(response => {
-                // Tratar a resposta do servidor, se necessário
                 console.log('Item atualizado com sucesso.');
                 })
                 .catch(error => {
@@ -80,5 +85,6 @@
         });
     
     </script>
+
 </body>
 </html>

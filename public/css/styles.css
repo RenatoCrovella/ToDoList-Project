@@ -2,3 +2,32 @@ h1{
     font-size: 2rem;
 }
 
+.list-deco{
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    padding: 4px;
+}
+
+.list-icon{
+    width: 20vw;
+    height: auto;
+}
+
+ul{
+    list-style: none;
+}
+
+li{
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+}
+
+.container-top{
+    margin-top: 10px;
+    margin-bottom: 12px;
+}
+
+.today-list{
+    padding: 12px;
+}

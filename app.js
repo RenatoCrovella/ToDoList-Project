@@ -70,33 +70,29 @@ app.post("/", (req, res) => {
 });
 
 app.post("/work", (req, res) => {
-    const inputTodoId = workTodos.lenght + 1;
+    const inputTodoId = workTodos.length; // Update the calculation here
     const inputTodoItem = req.body.todoTask;
 
     workTodos.push({
         todoId: inputTodoId,
-        todoItem: inputTodoItem
-    })
-
-    res.render("work", {
-        date,
-        workTodos
+        todoItem: inputTodoItem,
+        completed: false // Set the completed value to false for the new item
     });
+
+    res.redirect("/work");
 });
 
 app.post("/buyer", (req, res) => {
-    const inputTodoId = buyerTodos.lenght + 1;
+    const inputTodoId = buyerTodos.length; // Update the calculation here
     const inputTodoItem = req.body.todoTask;
 
     buyerTodos.push({
         todoId: inputTodoId,
-        todoItem: inputTodoItem
-    })
-
-    res.render("buyer", {
-        date,
-        buyerTodos
+        todoItem: inputTodoItem,
+        completed: false // Set the completed value to false for the new item
     });
+
+    res.redirect("/buyer");
 });
 
 app.post("/toggleCheckbox", (req, res) => {

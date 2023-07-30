@@ -10,8 +10,8 @@ body{
     display: flex;
     height: 65px;
     width: 70vw;
-    background-color: #258ccc;
-    color: #F9F5F6;
+    background-color: #3aa7eb;
+    color: #F8F6F4;
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -20,7 +20,7 @@ body{
 }
 
 .today-list{
-    background-color: #F8E8EE;
+    background-color: #C4DFDF;
 }
 
 .today-item{
@@ -33,7 +33,7 @@ body{
 
 input[type=checkbox]:checked + label{
     text-decoration: line-through;
-    background-color: #C4DFDF;
+    background-color: #7c92ff;
 }
 
 /*
