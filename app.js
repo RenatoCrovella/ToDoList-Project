@@ -28,16 +28,18 @@ const date = {
     day: _day
 }
 
-const todayTodos = [{todoId: 0, todoItem: "item 1"}, {todoId: 1, todoItem: "Item 2"}];
-const workTodos = [{todoId: 0, todoItem: "item 1"}, {todoId: 1, todoItem: "Item 2"}];
-const buyerTodos = [{todoId: 0, todoItem: "item 1"}, {todoId: 1, todoItem: "Item 2"}];
+//let todoActivity = {todoId: 0 , todoItem: "item", completed: false};
 
-app.get("/", (req, res)=>{
+const todayTodos = [{todoId: 0, todoItem: "item 1", completed: false}, {todoId: 1, todoItem: "Item 2", completed: false}];
+const workTodos = [{todoId: 0, todoItem: "item 1", completed: false}, {todoId: 1, todoItem: "Item 2", completed: false}];
+const buyerTodos = [{todoId: 0, todoItem: "item 1", completed: false}, {todoId: 1, todoItem: "Item 2", completed: false}];
+
+app.get("/", (req, res) => {
     res.render(__dirname + "/views/today.ejs", {
         date,
         todayTodos
-    })
-})
+    });
+});
 
 app.get("/work", (req, res)=>{
     res.render(__dirname + "/views/work.ejs",{
@@ -53,19 +55,18 @@ app.get("/buyer", (req, res)=>{
     })
 })
 
+
 app.post("/", (req, res) => {
-    const inputTodoId = todayTodos.lenght + 1;
+    const inputTodoId = todayTodos.length; // Update the calculation here
     const inputTodoItem = req.body.todoTask;
 
     todayTodos.push({
         todoId: inputTodoId,
-        todoItem: inputTodoItem
-    })
-
-    res.render("today", {
-        date,
-        todayTodos
+        todoItem: inputTodoItem,
+        completed: false // Set the completed value to false for the new item
     });
+
+    res.redirect("/");
 });
 
 app.post("/work", (req, res) => {
@@ -98,6 +99,42 @@ app.post("/buyer", (req, res) => {
     });
 });
 
+app.post("/toggleCheckbox", (req, res) => {
+    const listName = req.body.listName;
+    const itemId = req.body.itemId;
+    const itemStatus = req.body.completed;
+    let selectedList = null;
+
+    let whereToReturn = null;
+
+    switch(listName){
+        case "todayTodos":
+            whereToReturn = "/";
+            selectedList = todayTodos;
+            console.log(todayTodos);
+            break;
+        case "workTodos":
+            whereToReturn = "/work";
+            selectedList = workTodos;
+            break;
+        case "buyerTodos":
+            whereToReturn = "/buyer";
+            selectedList = buyerTodos;
+            break;
+        default:
+            console.log("Invalid list name");
+            return;
+    }
+
+    const itemToUpdate = selectedList.find(task => task.todoId == itemId);
+    if (itemToUpdate) {
+        itemToUpdate.completed = itemStatus;
+    } else {
+        console.log("Item not found");
+    }
+
+    res.json({ success: true, selectedList });
+})
 
 app.listen(port, ()=>{
     console.log(`server runnning on ${port}`);

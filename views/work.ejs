@@ -13,27 +13,74 @@
     
     <div class="today-list container">
         <div class="row">
-            <div class="col">
-                <ul>
-                    <% if (locals.workTodos) { %>
-                        <% workTodos.forEach((item, index) => { %>
-                            <li>   
-                                <input class="form-check-input" type="checkbox" value="" id="checkBox<%- index %>" name="todoItem">
-                                <label class="form-check-label" for="checkBox<%- index %>">
-                                    <%-  item.todoItem  %>
-                                </label>
-                            </li>
-                        <% }); %>
-                    <% } %>    
+          <div class="col">
+            <ul>
+                <% if (locals.workTodos) { %>
+                    <% workTodos.forEach((item, index) => { %>
                     <li>
-                        <form action="/work" method="POST">
-                        <input type="text" name="todoTask" placeholder="Add a new Task">
-                        <button type="submit">+</button>
+                        <form class="todo-form" method="POST">
+                        <input class="form-check-input" type="checkbox" value="" id="checkBox<%- index %>" name="todoItem" <% if(item.completed) { %>checked<% } %>>
+                        <label class="form-check-label" for="checkBox<%- index %>">
+                            <%- item.todoItem %>
+                        </label>
+                        <input type="hidden" name="listName" value="workTodos">
+                        <input type="hidden" name="itemId" value="<%- index %>">
+                        <input type="hidden" name="completed" value="<%- item.completed %>">
                         </form>
                     </li>
-                </ul> 
-            </div>
+                    <% }); %>
+                <% } %>
+              <li>
+                <form action="/work" method="POST">
+                  <input type="text" name="todoTask" placeholder="Add a new Task">
+                  <button type="submit">+</button>
+                </form>
+              </li>
+            </ul>
+          </div>
         </div>
-    </div>    
+      </div>
+    
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const todoForms = document.querySelectorAll('.todo-form');
+        
+            todoForms.forEach(form => {
+            const checkbox = form.querySelector('input[type="checkbox"]');
+            const completedInput = form.querySelector('input[name="completed"]');
+            const itemIdInput = form.querySelector('input[name="itemId"]');
+        
+            checkbox.addEventListener('change', () => {
+                const isChecked = checkbox.checked;
+                const itemId = itemIdInput.value;
+                
+                // Atualizar o valor de "completed" no input hidden para refletir o novo estado
+                completedInput.value = isChecked;
+        
+                // Enviar uma requisição para o servidor para atualizar o item
+                fetch('/toggleCheckbox', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    listName: 'workTodos',
+                    itemId: itemId,
+                    completed: isChecked
+                })
+                })
+                .then(response => {
+                // Tratar a resposta do servidor, se necessário
+                console.log('Item atualizado com sucesso.');
+                })
+                .catch(error => {
+                console.error('Erro ao atualizar o item:', error);
+                });
+            });
+            });
+        });
+    
+    </script>
 </body>
 </html>
